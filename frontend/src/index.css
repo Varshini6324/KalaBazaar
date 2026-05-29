@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #810B38;
+  --color-background: #F1E2D1;
+  --color-secondary: #DCC3AA;
+  --color-accent: #541A1A;
+  --color-vendor-sidebar: #2d0f06;
+  --color-vendor-bg: #fdf6ee;
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Poppins", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-accent font-sans m-0 p-0 antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif font-semibold text-primary;
+  }
+
+  button {
+    @apply transition-colors duration-300;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-accent text-background px-6 py-2 rounded-md hover:bg-primary font-medium shadow-md shadow-accent/20;
+  }
+  
+  .btn-secondary {
+    @apply border-2 border-accent text-accent px-6 py-2 rounded-md hover:bg-accent hover:text-background font-medium;
+  }
+  
+  .card {
+    @apply bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-secondary/30;
+  }
+}
