@@ -12,6 +12,7 @@ import RegisterPage from './pages/RegisterPage';
 import ShopPage from './pages/ShopPage';
 import ArtisansPage from './pages/ArtisansPage';
 import OurStoryPage from './pages/OurStoryPage';
+import ProductDetailPage from './pages/Productdetailpage';
 
 import VendorDashboard from './pages/vendor/VendorDashboard';
 import VendorProducts from './pages/vendor/VendorProducts';
@@ -48,6 +49,7 @@ function App() {
                 <Route path="/shop" element={<ShopPage />} />
                 <Route path="/artisans" element={<ArtisansPage />} />
                 <Route path="/our-story" element={<OurStoryPage />} />
+                <Route path="/products/:id" element={<ProductDetailPage />} />
               </Routes>
             </main>
           </div>
