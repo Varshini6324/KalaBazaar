@@ -66,7 +66,9 @@ const VendorSidebar = ({ isOpen, onClose }) => {
           <p className="text-white/90 font-medium text-sm truncate">
             {user?.name || 'Vendor'}
           </p>
-          <p className="text-white/50 text-xs mt-0.5">Vendor Dashboard</p>
+          <p className="text-white/50 text-xs mt-0.5">
+            {user?.role === 'vendor' ? `Store profile` : 'Vendor Dashboard'}
+          </p>
         </div>
 
         {/* Navigation */}
