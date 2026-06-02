@@ -37,6 +37,8 @@ const LoginPage = () => {
     try {
       const response = await authService.login(formData);
       dispatch(setCredentials({ user: response, token: response.token }));
+      // Ensure a vendor refresh/login persists
+      localStorage.setItem('token', response.token);
       if (response.role === 'vendor') {
         navigate('/vendor/dashboard');
       } else {

@@ -43,6 +43,7 @@ function App() {
             <Navbar />
             <main className="flex-grow">
               <Routes>
+                {/* Ensure these exist for client-side routing on Vercel */}
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
