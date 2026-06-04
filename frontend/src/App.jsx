@@ -3,8 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 import VendorRoute from './components/VendorRoute';
+import VendorDashboard from './pages/vendor/VendorDashboard';
 import VendorLayout from './components/vendor/VendorLayout';
-
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
