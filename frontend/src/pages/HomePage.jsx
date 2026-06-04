@@ -122,28 +122,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Artisan Spotlight */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="bg-white rounded-2xl border border-secondary/30 overflow-hidden shadow-sm grid grid-cols-1 lg:grid-cols-2">
-          <div 
-            className="h-80 lg:h-auto bg-cover bg-center"
-            style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1566616213894-2d4e1baee5d8?q=80&w=800&auto=format&fit=crop")' }}
-          ></div>
-          <div className="p-8 sm:p-12 lg:p-16 flex flex-col justify-center">
-            <span className="text-primary font-bold uppercase tracking-wider text-xs">Artisan In Focus</span>
-            <h2 className="text-3xl font-serif text-accent font-bold mt-2 mb-6">Meet Master Artisan Meera</h2>
-            <p className="text-accent/80 leading-relaxed mb-6 font-light">
-              "For over three generations, my family has practiced the art of block printing and natural Indigo dyeing. Partnering with KalaBazaar has allowed me to keep this heritage alive and sponsor my daughter's education."
-            </p>
-            <p className="text-sm font-semibold text-accent mb-8">
-              Meera Bai · Indigo Weaver, Jaipur
-            </p>
-            <Link to="/our-story" className="btn-primary w-fit flex items-center gap-2">
-              Discover Our Story
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* Join Community CTA */}
       <section className="bg-primary text-background text-center py-20 px-6">
