@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../features/auth/authSlice';
@@ -22,6 +22,7 @@ const navItems = [
 const VendorSidebar = ({ isOpen, onClose }) => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -96,15 +97,45 @@ const VendorSidebar = ({ isOpen, onClose }) => {
         {/* Logout */}
         <div className="px-3 py-4 border-t border-white/10">
           <button
-            onClick={handleLogout}
+            onClick={() => setShowLogoutConfirm(true)}
             className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium
-                       text-white/70 hover:bg-red-900/30 hover:text-red-300 transition-all duration-200 w-full"
+                       text-white/70 hover:bg-red-900/30 hover:text-red-300 transition-all duration-200 w-full cursor-pointer"
           >
             <LogOut size={18} />
             Logout
           </button>
         </div>
       </aside>
+
+      {showLogoutConfirm && (
+        <div className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl p-6 max-w-sm w-full shadow-2xl text-accent">
+            <h3 className="font-serif text-xl text-primary font-semibold mb-2">
+              Confirm Logout
+            </h3>
+            <p className="text-sm text-accent/70 mb-6">
+              Are you sure you want to log out of your account?
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setShowLogoutConfirm(false)}
+                className="px-4 py-2 border border-secondary rounded-md text-sm font-medium hover:bg-black/5 transition-colors cursor-pointer text-accent"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  setShowLogoutConfirm(false);
+                  handleLogout();
+                }}
+                className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors shadow-md cursor-pointer"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
