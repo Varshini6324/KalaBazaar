@@ -3,8 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { ShoppingCart, Zap, ArrowLeft, Star, Plus, Minus, CheckCircle, Package, Truck, Shield } from 'lucide-react';
-// Cart feature not present in this project right now
-// import { addToCart } from '../features/cart/cartSlice';
+import { addToCart } from '../features/cart/cartSlice';
 
 const StarRow = ({ rating, count }) => (
   <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>

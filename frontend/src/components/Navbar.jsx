@@ -7,9 +7,12 @@ import { ShoppingCart, User, Menu, LogOut, LayoutDashboard } from 'lucide-react'
 
 const Navbar = () => {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart || { cartItems: [] });
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const cartItemsCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   const handleLogout = () => {
     authService.logout();
@@ -60,11 +63,17 @@ const Navbar = () => {
                 <User size={24} />
               </Link>
             )}
-            <button className="hover:text-secondary transition-colors relative">
+            <button
+              onClick={() => navigate('/cart')}
+              className="hover:text-secondary transition-colors relative cursor-pointer"
+              title="Shopping Cart"
+            >
               <ShoppingCart size={24} />
-              <span className="absolute -top-2 -right-2 bg-accent text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
-                0
-              </span>
+              {cartItemsCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-accent text-white text-xs font-bold px-1.5 py-0.5 rounded-full animate-bounce">
+                  {cartItemsCount}
+                </span>
+              )}
             </button>
             <button className="md:hidden hover:text-secondary transition-colors">
               <Menu size={24} />

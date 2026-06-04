@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 
 import ShopPage from './pages/ShopPage';
+import CartPage from './pages/CartPage';
 import ArtisansPage from './pages/ArtisansPage';
 import OurStoryPage from './pages/OurStoryPage';
 import ProductDetailPage from './pages/Productdetailpage';
@@ -48,6 +49,7 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/shop" element={<ShopPage />} />
+                <Route path="/cart" element={<CartPage />} />
                 <Route path="/artisans" element={<ArtisansPage />} />
                 <Route path="/our-story" element={<OurStoryPage />} />
                 <Route path="/products/:id" element={<ProductDetailPage />} />
