@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { setCredentials } from '../features/auth/authSlice';
 import authService from '../features/auth/authService';
 
 // Simple eye icon component (reuse from LoginPage)
@@ -34,6 +36,7 @@ const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -58,8 +61,14 @@ const RegisterPage = () => {
     setError('');
     
     try {
-      await authService.register(formData);
-      navigate('/login');
+      const response = await authService.register(formData);
+      dispatch(setCredentials({ user: response, token: response.token }));
+      localStorage.setItem('token', response.token);
+      if (response.role === 'vendor') {
+        navigate('/vendor/dashboard');
+      } else {
+        navigate('/');
+      }
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to register');
     } finally {
