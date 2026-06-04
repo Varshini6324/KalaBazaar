@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ShoppingCart, Star, Search, SlidersHorizontal, X } from 'lucide-react';
 
 const CATEGORIES = ['All', 'Textiles', 'Pottery', 'Jewelry', 'Woodwork', 'Metalwork', 'Other'];
 
 const ShopPage = () => {
+  const location = useLocation();
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeCategory, setActiveCategory] = useState(location.state?.category || 'All');
   const [sortBy, setSortBy] = useState('default');
   const [showFilters, setShowFilters] = useState(false);
 
