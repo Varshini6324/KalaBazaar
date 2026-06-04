@@ -15,7 +15,8 @@ import ArtisansPage from './pages/ArtisansPage';
 import OurStoryPage from './pages/OurStoryPage';
 import ProductDetailPage from './pages/Productdetailpage';
 
-import VendorDashboard from './pages/vendor/VendorDashboard';
+import CustomerDashboard from './pages/CustomerDashboard';
+
 import VendorProducts from './pages/vendor/VendorProducts';
 import VendorProductForm from './pages/vendor/VendorProductForm';
 import VendorOrders from './pages/vendor/VendorOrders';
@@ -53,6 +54,7 @@ function App() {
                 <Route path="/artisans" element={<ArtisansPage />} />
                 <Route path="/our-story" element={<OurStoryPage />} />
                 <Route path="/products/:id" element={<ProductDetailPage />} />
+                <Route path="/dashboard" element={<CustomerDashboard />} />
               </Routes>
             </main>
           </div>
