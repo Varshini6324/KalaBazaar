@@ -41,15 +41,13 @@ const Navbar = () => {
                 <span className="text-sm font-medium text-background/80 hidden sm:inline-block">
                   Hi, {user.name.split(' ')[0]}
                 </span>
-                {user.role === 'vendor' && (
-                  <Link
-                    to="/vendor/dashboard"
-                    className="flex items-center gap-1 hover:text-secondary transition-colors text-sm font-medium border border-background/20 px-3 py-1.5 rounded-md hover:border-secondary"
-                  >
-                    <LayoutDashboard size={16} />
-                    <span className="hidden lg:inline">Dashboard</span>
-                  </Link>
-                )}
+                <Link
+                  to={user.role === 'vendor' ? '/vendor/dashboard' : '/dashboard'}
+                  className="flex items-center gap-1 hover:text-secondary transition-colors text-sm font-medium border border-background/20 px-3 py-1.5 rounded-md hover:border-secondary"
+                >
+                  <LayoutDashboard size={16} />
+                  <span className="hidden sm:inline">Dashboard</span>
+                </Link>
                 <button
                   onClick={() => setShowLogoutConfirm(true)}
                   className="hover:text-secondary transition-colors flex items-center gap-1 text-sm font-medium cursor-pointer"

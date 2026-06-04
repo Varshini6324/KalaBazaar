@@ -6,6 +6,7 @@ import { removeFromCart, updateQuantity, clearCart } from '../features/cart/cart
 
 const CartPage = () => {
   const { cartItems } = useSelector((state) => state.cart || { cartItems: [] });
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -35,6 +36,35 @@ const CartPage = () => {
 
   const handleBillingSubmit = (e) => {
     e.preventDefault();
+
+    try {
+      const userId = user ? user._id : 'guest';
+      const orderId = 'ORD-' + Math.random().toString(36).substring(2, 11).toUpperCase();
+      const newOrder = {
+        id: orderId,
+        date: new Date().toISOString(),
+        items: cartItems.map(item => ({
+          _id: item._id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.images?.[0] || null,
+          vendor: item.vendor?.vendorDetails?.storeName || item.vendor?.name || 'Artisan'
+        })),
+        billingInfo: { ...billingInfo },
+        subtotal: subtotal,
+        shippingFee: shippingFee,
+        total: total,
+        status: 'Processing'
+      };
+
+      const existingOrders = JSON.parse(localStorage.getItem(`orders_${userId}`)) || [];
+      existingOrders.unshift(newOrder);
+      localStorage.setItem(`orders_${userId}`, JSON.stringify(existingOrders));
+    } catch (err) {
+      console.error('Failed to save order history:', err);
+    }
+
     setCheckoutStep('success');
   };
 

@@ -5,6 +5,7 @@ const {
   getAllVendors,
   approveVendor,
   getArtisans,
+  updateUserProfile,
 } = require('../controllers/userController');
 
 const { protect, authorize } = require('../middleware/authMiddleware');
@@ -13,6 +14,9 @@ const router = express.Router();
 
 // Public routes
 router.get('/artisans', getArtisans); // ✅ public — used by ArtisansPage
+
+// Profile routes
+router.put('/profile', protect, updateUserProfile);
 
 // Vendor profile routes
 router.put('/vendor-profile', protect, authorize('vendor'), updateVendorProfile);
