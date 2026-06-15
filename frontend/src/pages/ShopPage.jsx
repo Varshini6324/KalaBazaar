@@ -1,12 +1,17 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Star, Search, SlidersHorizontal, X } from 'lucide-react';
 
 const CATEGORIES = ['All', 'Textiles', 'Pottery', 'Jewelry', 'Woodwork', 'Metalwork', 'Other'];
 
 const ShopPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const queryParams = new URLSearchParams(location.search);
+  const vendorParam = queryParams.get('vendor');
+
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,6 +20,14 @@ const ShopPage = () => {
   const [activeCategory, setActiveCategory] = useState(location.state?.category || 'All');
   const [sortBy, setSortBy] = useState('default');
   const [showFilters, setShowFilters] = useState(false);
+  const [activeVendor, setActiveVendor] = useState(vendorParam || '');
+
+  // Sync state if location query changes
+  useEffect(() => {
+    const qParams = new URLSearchParams(location.search);
+    const vParam = qParams.get('vendor');
+    setActiveVendor(vParam || '');
+  }, [location.search]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -33,6 +46,13 @@ const ShopPage = () => {
 
   useEffect(() => {
     let result = [...products];
+
+    if (activeVendor) {
+      result = result.filter((p) => {
+        const pVendorId = p.vendor?._id || p.vendor;
+        return pVendorId === activeVendor;
+      });
+    }
 
     if (activeCategory !== 'All') {
       result = result.filter((p) => p.category === activeCategory);
@@ -54,7 +74,20 @@ const ShopPage = () => {
     else if (sortBy === 'newest') result.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
     setFiltered(result);
-  }, [search, activeCategory, sortBy, products]);
+  }, [search, activeCategory, activeVendor, sortBy, products]);
+
+  const getVendorStoreName = () => {
+    const matchingProduct = products.find(p => (p.vendor?._id || p.vendor) === activeVendor);
+    if (matchingProduct && matchingProduct.vendor) {
+      return matchingProduct.vendor.vendorDetails?.storeName || matchingProduct.vendor.name || 'Artisan';
+    }
+    return 'Artisan';
+  };
+
+  const clearVendorFilter = () => {
+    setActiveVendor('');
+    navigate('/shop');
+  };
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#F1E2D1', fontFamily: 'Georgia, serif' }}>
@@ -126,6 +159,44 @@ const ShopPage = () => {
             <option value="rating">Top Rated</option>
           </select>
         </div>
+
+        {activeVendor && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            backgroundColor: '#810B38',
+            color: '#fff',
+            padding: '0.4rem 0.8rem',
+            borderRadius: '20px',
+            fontSize: '0.85rem',
+            marginBottom: '1.25rem',
+            width: 'fit-content',
+            boxShadow: '0 2px 8px rgba(129,11,56,0.15)',
+          }}>
+            <span>Artisan: <strong>{getVendorStoreName()}</strong></span>
+            <button
+              onClick={clearVendorFilter}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#fff',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 0,
+                opacity: 0.8,
+                transition: 'opacity 0.2s',
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.opacity = 1}
+              onMouseLeave={(e) => e.currentTarget.style.opacity = 0.8}
+              title="Clear Filter"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        )}
 
         {/* Category Pills */}
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
